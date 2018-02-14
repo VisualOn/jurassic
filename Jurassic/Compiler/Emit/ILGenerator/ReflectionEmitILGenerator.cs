@@ -414,7 +414,7 @@ namespace Jurassic.Compiler
                         this.generator.Emit(OpCodes.Ldc_I4_8);
                         break;
                 }
-                
+
             }
             else if (value >= -128 && value < 128)
                 this.generator.Emit(OpCodes.Ldc_I4_S, (byte)value);
@@ -1125,7 +1125,9 @@ namespace Jurassic.Compiler
         /// <param name="endColumn"> The column in the line where the sequence point ends. </param>
         public override void MarkSequencePoint(System.Diagnostics.SymbolStore.ISymbolDocumentWriter document, int startLine, int startColumn, int endLine, int endColumn)
         {
+#if !NETSTANDARD2_0
             this.generator.MarkSequencePoint(document, startLine, startColumn, endLine, endColumn);
+#endif
         }
 
 
