@@ -281,7 +281,14 @@ namespace Jurassic
                     {
                         var permission = new System.Security.Permissions.SecurityPermission(
                             System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode);
+#if NET45
+                        var permissionSet = new System.Security.PermissionSet(
+                            System.Security.Permissions.PermissionState.None);
+                        permissionSet.AddPermission(permission);
+                        lowPrivilegeEnvironment = !permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
+#else
                         lowPrivilegeEnvironment = !System.Security.SecurityManager.IsGranted(permission);
+#endif
                         lowPrivilegeEnvironmentTested = true;
                     }
                 }
@@ -480,14 +487,14 @@ namespace Jurassic
         }
 
         /// <summary>
-        /// Gets or sets whether CLR types can be exposed directly to the script engine.  If this is set to 
+        /// Gets or sets whether CLR types can be exposed directly to the script engine.  If this is set to
         /// <c>false</c>, attempting to instantiate CLR types from script may result in exceptions being
         /// thrown in script.
         /// </summary>
         /// <remarks>
         /// <para>This property is intended to prevent script developers from accessing the entire CLR
         /// type system, for security purposes.  When this property is set to <c>false</c>, it should prevent
-        /// new instances of CLR types from being exposed to the script engine, even if you have already 
+        /// new instances of CLR types from being exposed to the script engine, even if you have already
         /// exposed CLR types to the script engine.</para>
         /// </remarks>
         public bool EnableExposedClrTypes
@@ -553,7 +560,7 @@ namespace Jurassic
                 source,                             // The source code.
                 CreateOptions(),                    // The compiler options.
                 this.Global);                       // The value of the "this" keyword.
-            
+
             // Parse
             if (this.ParsingStarted != null)
                 this.ParsingStarted(this, EventArgs.Empty);
