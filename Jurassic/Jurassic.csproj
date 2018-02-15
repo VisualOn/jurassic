@@ -4,7 +4,7 @@
     <Import Project="$([MSBuild]::GetPathOfFileAbove(Jurassic.props))" />
 
     <PropertyGroup>
-        <TargetFrameworks>net35;net45;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
 
         <PackageId>VisualOn.Jurassic</PackageId>
 
@@ -32,8 +32,8 @@
         <FrameworkPathOverride>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-        <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <PropertyGroup Condition=" '$(MSBuildRuntimeType)' == 'Core' ">
+        <TargetFrameworks>net35;net45;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
 
 </Project>

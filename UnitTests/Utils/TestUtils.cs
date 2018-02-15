@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +68,7 @@ namespace UnitTests
             if (jurassicScriptEngine == null)
             {
                 jurassicScriptEngine = new Jurassic.ScriptEngine();
-#if DEBUG
+#if DEBUG && !NETSTANDARD2_0
                 jurassicScriptEngine.EnableDebugging = true;
 #endif
             }
