@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <Import Project="$([MSBuild]::GetPathOfFileAbove(Jurassic.props))" />
+
     <PropertyGroup>
-        <RootNamespace>Jurassic</RootNamespace>
-        <AssemblyName>Jurassic</AssemblyName>
         <TargetFrameworks>net35;net45;netstandard2.0</TargetFrameworks>
 
-        <VersionPrefix Condition="'$(VersionPrefix)' == ''">2.2.3</VersionPrefix>
-        <VersionSuffix Condition=" '$(Full)' != 'true' and '$(VersionSuffix)' == ''">beta.2</VersionSuffix>
-        <VersionSuffix Condition=" '$(BUILD_NUMBER)' != '' and '$(VersionSuffix)' != ''">$(VersionSuffix).$(BUILD_NUMBER)</VersionSuffix>
-        <VersionSuffix Condition=" '$(GIT_COMMIT)' != '' and '$(VersionSuffix)' != ''">$(VersionSuffix)+ci.$(GIT_COMMIT)</VersionSuffix>
-        <AssemblyVersion>2.0.0.0</AssemblyVersion>
-
-        <PackageId>VisualOn.$(AssemblyName)</PackageId>
-        <Product>Jurassic</Product>
-        <Copyright>Copyright © VisualOn GmbH $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
-        <Authors>Paul Bartrum, Michael Kriese</Authors>
-        <Company>VisualOn GmbH</Company>
-        <PackageProjectUrl>https://github.com/VisualOn/jurassic</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/VisualOn/jurassic.git</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>$([MSBuild]::GetPathOfFileAbove(Jurassic.snk))</AssemblyOriginatorKeyFile>
-
+        <PackageId>VisualOn.Jurassic</PackageId>
 
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -46,6 +30,10 @@
     -->
     <PropertyGroup Condition="'$(TargetFramework)' == 'net35' and  '$(MSBuildRuntimeType)' == 'Core'">
         <FrameworkPathOverride>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+        <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
 
 </Project>
