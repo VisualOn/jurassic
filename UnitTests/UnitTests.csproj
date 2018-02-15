@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="$([MSBuild]::GetPathOfFileAbove(Jurassic.props))" />
+
+    <PropertyGroup>
+        <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>$([MSBuild]::GetPathOfFileAbove(Jurassic.snk))</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+        <!-- <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" /> -->
+    </ItemGroup>
+
+  <ItemGroup>
+    <None Update="**\*.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jurassic\Jurassic.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+        <!-- <TargetFrameworks>net45</TargetFrameworks> -->
+    </PropertyGroup>
+</Project>
